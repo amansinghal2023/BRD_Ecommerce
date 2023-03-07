@@ -25,7 +25,9 @@ SECRET_KEY = 'django-insecure-5&wsp18-p*2ru6l6##bo4tle__3*qq+=i)7kk!hz!e&l%2m0s=
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['1812-2401-4900-1cbd-9361-b4c2-1668-d052-cc37.in.ngrok.io']
+# ALLOWED_HOSTS = ['1812-2401-4900-1cbd-9361-b4c2-1668-d052-cc37.in.ngrok.io']
+ALLOWED_HOSTS = ['*']
+# ALLOWED_HOSTS = ['c0fc-2401-4900-1cbd-9361-1900-70b9-cb17-6de8.in.ngrok.io']
 
 
 # Application definition
@@ -38,7 +40,11 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'authentication',
+    'product',
+    'user_profile',
     'rest_framework',
+    'corsheaders',
+    'profile',
 ]
 
 MIDDLEWARE = [
@@ -49,7 +55,45 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+
+    'corsheaders.middleware.CorsMiddleware',
 ]
+
+# CORS_ALLOWED_ORIGINS = [
+#     # "https://example.com",
+#     # "https://sub.example.com",
+#     # "http://localhost:8080",
+#     # "http://127.0.0.1:8080"
+#     "*"
+# ]
+
+CORS_ORIGIN_ALLOW_ALL = True
+# CORS_ORIGIN_WHITELIST = (
+#   'http://localhost:8000',
+# )
+
+CORS_ALLOW_METHODS = [
+    "DELETE",
+    "GET",
+    "PATCH",
+    "POST",
+    "PUT",
+]
+CORS_ALLOW_HEADERS = [
+    "accept",
+    "accept-encoding",
+    "authorization",
+    "content-type",
+    "dnt",
+    "origin",
+    "user-agent",
+    "x-csrftoken",
+    "x-requested-with",
+]
+
+
+
+
 
 ROOT_URLCONF = 'eco_pro.urls'
 
@@ -127,3 +171,4 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+# APPEND_SLASH = False

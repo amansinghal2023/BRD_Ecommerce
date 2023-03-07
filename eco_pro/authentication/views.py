@@ -4,7 +4,7 @@ from rest_framework.response import Response
 from .serializers import  SignupSerializer
 from .models import Signup
 from .service import validate_password,user_validation
-
+from django.db.models import Q
 
 class SignupAPI(APIView):
     def post(self, request):
@@ -19,6 +19,13 @@ class SignupAPI(APIView):
         else:
             return Response({"status":400,"error" : True,"messasge":"password and confirm password is not same"})
         
+
+    def get(self, request, format=None):
+        signup = Signup.objects.all()
+        serializer = SignupSerializer(signup, many=True)
+        print(serializer.data)
+        return Response(serializer.data)
+
 class LoginAPI(APIView):
     def post(self,request):
         email=request.data.get('email')
@@ -29,3 +36,11 @@ class LoginAPI(APIView):
             return Response({"status":200,"error" : False, "messasge":"login successfully"})
         else:
             return Response({"status":400,"error" : True,"messasge":"not matching"})
+        
+    # def get(self, request, format=None):
+    #     email=Signup.objects.get('email')
+    #     password=Signup.objects.get('password')
+    #     signup = Signup.objects.filter(Q(email=email) & Q(password=password)).values()
+    #     serializer = SignupSerializer(signup, many=True)
+    #     print(serializer.data)
+    #     return Response(serializer.data)
