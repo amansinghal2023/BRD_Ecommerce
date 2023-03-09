@@ -16,6 +16,7 @@ class CategoryAPI(APIView):
         return Response({"status":200,"error" : False, "messasge":"Data is saved successfully"})
     
     def get(self, request, format=None,pk=None):
+        print("query param is",request.GET.get('id'))
         id=pk
         if id is not None:
             cat=Category.objects.get(id=id)
@@ -24,8 +25,18 @@ class CategoryAPI(APIView):
             return Response({"status" : 200 , "error" : False , "data":serializer.data})
         category = Category.objects.all()
         serializer = CategorySerializer(category, many=True)
-        print(serializer.data)
-        return Response(serializer.data)
+        response_list = []
+        for data in serializer.data:
+            response_dict={}
+            response_dict["category"] = data["name"]
+            response_dict["product_details"] = data["category"]
+            response_list.append(response_dict)
+            # print("----------------------",i)
+            
+
+        # print("------------",serializer.data[0])
+    
+        return Response({"status":200, "data": response_list})
 
 class ProductAPI(APIView):
     def post(self, request):
@@ -73,3 +84,13 @@ class ProductAPI(APIView):
         else:
             # return Response( {"error":serializer.errors}, status=status.HTTP_400_ BAD_REQUEST)
             return Response( {"error":serializer.errors})
+        
+class ProductDetailsView(APIView):
+    def get(self, request):
+        id = request.GET.get('id')
+        product_details = Product.objects.filter(id = id).values_list('product_details')
+        return Response({
+            "status":200,
+            "product_details":product_details[0][0]
+        })
+        

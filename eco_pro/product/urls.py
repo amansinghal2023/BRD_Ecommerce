@@ -7,5 +7,6 @@ urlpatterns = [
     path('category/',CategoryAPI.as_view() ),
     path('product/',ProductAPI.as_view() ),
     path('product/<int:pk>/',ProductAPI.as_view() ),
+    path('product/details/',ProductDetailsView.as_view()),
     # path('offer/',OfferAPI.as_view() ),
 ]

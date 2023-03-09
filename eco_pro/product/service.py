@@ -4,6 +4,7 @@ from django.db.models import Q
 
 def getcategory(data):
     data= data
+    # print("-----",data)
     for i in data:
         print(i.get("product_category"))
         cat=i.get("product_category")
