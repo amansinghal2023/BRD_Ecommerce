@@ -8,6 +8,8 @@ class Address(models.Model):
     state = models.CharField(max_length=255)
     zip_code = models.CharField(max_length=20)
 
+    # def __str__(self):
+    #     return self.city
 
 class Profile(models.Model):
     first_name = models.CharField(max_length=50)
@@ -15,10 +17,14 @@ class Profile(models.Model):
     email = models.EmailField()
     phone_number = models.CharField(max_length=20)
     date_of_birth = models.DateField(null=True, blank=True)
-    address = models.ForeignKey('Address', on_delete=models.SET_NULL, null=True, blank=True, related_name='profile')
+    address = models.ForeignKey(Address, on_delete=models.SET_NULL, null=True, blank=True, related_name='profile')
 
     # def __str__(self):
     #     return f"{self.user.username}'s profile"
+
+    def __str__(self):
+        return self.first_name
+
 
 
     # def __str__(self):

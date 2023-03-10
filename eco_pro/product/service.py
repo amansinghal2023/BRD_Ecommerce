@@ -8,6 +8,8 @@ def getcategory(data):
     for i in data:
         print(i.get("product_category"))
         cat=i.get("product_category")
+
+        # print("THIS IS J ------------------->",cat)
         cat_name=[]
 
         for j in cat:

@@ -18,18 +18,13 @@ class ProfileAPI(APIView):
         return Response({"status":200,"error" : False, "messasge":"Data is saved successfully"})
     
 
-    def get(self, request, format=None,pk=None):
-        # id=pk
-        # if id is not None:
-        #     profile=PersonalDetail.objects.get(id=id)
-        #     serializer = PersonalSerializer(profile)
-        #     return Response({"status" : 200 , "error" : False , "data":serializer.data})
-        
+    def get(self, request):
         personal = Profile.objects.all()
         serializer = ProfileSerializer(personal, many=True)
         # print(serializer.data)
-        # data=getprofile(serializer.data)
-        return Response(serializer.data)
+        data=getprofile(serializer.data)
+        print("THE FULL DATA IS RESPONSE -------------------->",data[0])
+        return Response(data)
 
 class AddressAPI(APIView):
     def post(self, request):
