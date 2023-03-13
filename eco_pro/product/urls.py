@@ -10,3 +10,5 @@ urlpatterns = [
     path('product/details/',ProductDetailsView.as_view()),
     # path('offer/',OfferAPI.as_view() ),
 ]
+
+

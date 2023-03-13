@@ -89,8 +89,15 @@ class ProductDetailsView(APIView):
     def get(self, request):
         id = request.GET.get('id')
         product_details = Product.objects.filter(id = id).values_list('product_details')
+        print("----------------------->",product_details)
         return Response({
             "status":200,
             "product_details":product_details[0][0]
         })
+    
+    # product = Product.objects.all()
+    #     serializer = ProductSerializer(product, many=True)
+    #     data=getcategory(serializer.data)
+    #     print(data)
+    #     return Response({"status" : 200 , "error" : False , "data":data})
         
