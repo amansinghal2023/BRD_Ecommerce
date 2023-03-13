@@ -20,6 +20,6 @@ def getprofile(data):
 
             # print("this is name is django --------------------------------------->",name)
             pro_name.append(name)
-        i["address"]=pro_name[0]
+        # i["address"]=pro_name[0]
     return data
 

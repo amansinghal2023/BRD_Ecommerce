@@ -9,21 +9,29 @@ from .service import getprofile
 # from .service import validate_password,user_validation
 # from .models import Category,Product
 # # Create your views here.
+from rest_framework import viewsets
+
 class ProfileAPI(APIView):
     def post(self, request):
         serializer=ProfileSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
         serializer.save()
-        
         return Response({"status":200,"error" : False, "messasge":"Data is saved successfully"})
     
 
-    def get(self, request):
+    
+    def get(self, request, format=None,pk=None):
+        id=pk
+        if id is not None:
+            profile=Profile.objects.get(id=id)
+            serializer = ProfileSerializer(profile)
+            return Response({"status" : 200 , "error" : False , "data":serializer.data})
+        
         personal = Profile.objects.all()
         serializer = ProfileSerializer(personal, many=True)
         # print(serializer.data)
         data=getprofile(serializer.data)
-        print("THE FULL DATA IS RESPONSE -------------------->",data[0])
+        # print("THE FULL DATA IS RESPONSE -------------------->",data[0])
         return Response(data)
 
 class AddressAPI(APIView):
@@ -35,11 +43,11 @@ class AddressAPI(APIView):
     
 
     def get(self, request, format=None,pk=None):
-        # id=pk
-        # if id is not None:
-        #     profile=PersonalDetail.objects.get(id=id)
-        #     serializer = PersonalSerializer(profile)
-        #     return Response({"status" : 200 , "error" : False , "data":serializer.data})
+        id=pk
+        if id is not None:
+            add=Address.objects.get(id=id)
+            serializer = AddressSerializer(add)
+            return Response({"status" : 200 , "error" : False , "data":serializer.data})
         
         address = Address.objects.all()
         serializer = AddressSerializer(address, many=True)
