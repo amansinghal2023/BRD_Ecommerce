@@ -88,9 +88,9 @@ class ProductAPI(APIView):
 class ProductDetailsView(APIView):
     def get(self, request):
         id = request.GET.get('id')
-        product_details = Product.objects.filter(id = id).values_list('product_details')
+        product_details = list(Product.objects.filter(id = id).values())
         return Response({
             "status":200,
-            "product_details":product_details[0][0]
+            "product_details":product_details[0]
         })
         

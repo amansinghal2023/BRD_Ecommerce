@@ -4,7 +4,7 @@ from product.models import Product
 from django.contrib.postgres.fields import ArrayField
 # Create your models here.
 class Cart(models.Model):
-    user= models.ForeignKey(Signup,on_delete=models.CASCADE)
+    user= models.CharField(max_length=100)
     product= ArrayField(models.IntegerField())
 
 
