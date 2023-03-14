@@ -4,6 +4,7 @@ from rest_framework.response import Response
 from authentication.models import Signup
 from product.models import Product
 from .models import Cart
+from .serializer import CartSerializer
 
 
 class CartItems(APIView):
@@ -19,6 +20,8 @@ class CartItems(APIView):
         cart_obj= Cart(user=email,product=[product_id])
         cart_obj.save()
         return Response({"status":200,"error" : False, "messasge":"Item has been added in cart"})
+        
+    
         
 class GetCartItem(APIView):
     def get(self,request):
