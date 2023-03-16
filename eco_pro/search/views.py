@@ -10,6 +10,7 @@ class SearchItems(APIView):
         search_param = request.GET.get('name')
         queryset = Product.objects.all()
         if search_param:
-            queryset = queryset.filter(Q(product_name__icontains=search_param) | Q(product_dic__icontains=search_param))
+            queryset = queryset.filter(Q(product_name__icontains=search_param) | Q(product_category__name__icontains=search_param))
+
         serializer = ProductSerializer(queryset, many=True)
         return Response(serializer.data)
