@@ -39,13 +39,12 @@ class LoginAPI(APIView):
         # else:
         #     return Response({"status":400,"error" : True,"messasge":"not matching"})
         user=Signup.objects.get(email=email,password=password)
-        username=Signup.objects.values_list('username', flat=True)
-        print("--------------------------------->>>>",username[0])
+        print("--------------------------------->>>>",user.username)
         if user:
             refresh=RefreshToken.for_user(user)
             print(refresh)
             return Response({"status":200,
-                             "username": str(username[0]),
+                             "username": str(user.username),
                              "refresh":str(refresh),
                              "access":str(refresh.access_token)
                              })

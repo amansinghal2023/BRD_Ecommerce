@@ -8,7 +8,6 @@ class Cart(models.Model):
     user= models.ForeignKey(Signup,on_delete=models.CASCADE)
     product= models.IntegerField()
     count=models.IntegerField(default=0)
-    
 
     user= models.CharField(max_length=100)
     product= ArrayField(models.IntegerField())
