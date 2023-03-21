@@ -5,9 +5,9 @@ from django.contrib.postgres.fields import ArrayField
 # Create your models here.
 class Cart(models.Model):
     user= models.ForeignKey(Signup,on_delete=models.CASCADE)
-    product= ArrayField(models.IntegerField())
-
-
+    product= models.IntegerField()
+    count=models.IntegerField(default=0)
+    
 # class ChessBoard(models.Model):
 #     board = ArrayField(
 #         ArrayField(

@@ -6,19 +6,24 @@ from rest_framework.response import Response
 from .serializers import  ProfileSerializer,AddressSerializer
 from .models import Profile,Address
 from .service import getprofile
-# from .service import validate_password,user_validation
-# from .models import Category,Product
-# # Create your views here.
+from rest_framework.permissions import IsAuthenticated
+from authentication.models import Signup
+
 from rest_framework import viewsets
 
 class ProfileAPI(APIView):
+    # permission_classes=[IsAuthenticated]
     def post(self, request):
-        serializer=ProfileSerializer(data=request.data)
-        serializer.is_valid(raise_exception=True)
-        serializer.save()
-        return Response({"status":200,"error" : False, "messasge":"Data is saved successfully"})
-    
-
+        user_id=request.user.id
+        data= request.data
+        print("---------------->.........",data)
+        print("---------------->.........",user_id)
+        # data['signup_profile']=user_id
+        # print("------------------------>>>>>>>>>>>>>>>>>.",data)
+        # serializer=ProfileSerializer(data=request.data)
+        # serializer.is_valid(raise_exception=True)
+        # serializer.save()
+        # return Response({"status":200,"error" : False, "messasge":"Data is saved successfully"})
     
     def get(self, request, format=None,pk=None):
         id=pk
@@ -27,20 +32,22 @@ class ProfileAPI(APIView):
             serializer = ProfileSerializer(profile)
             return Response({"status" : 200 , "error" : False , "data":serializer.data})
         
-        personal = Profile.objects.all()
-        serializer = ProfileSerializer(personal, many=True)
-        # print(serializer.data)
+        profile = Profile.objects.all()
+        serializer = ProfileSerializer(profile, many=True)
         data=getprofile(serializer.data)
-        # print("THE FULL DATA IS RESPONSE -------------------->",data[0])
-        return Response(data)
+        print("This is the data ------------->",data)
+        return Response({"status" : 200 , "error" : False , "data":data})
 
 class AddressAPI(APIView):
     def post(self, request):
-        serializer=AddressSerializer(data=request.data)
-        serializer.is_valid(raise_exception=True)
-        serializer.save()
+        user_id=request.user.id
+        data= request.data
+        print("---------------->.........",data)
+        print("---------------->.........",user_id)
+        # serializer=AddressSerializer(data=request.data)
+        # serializer.is_valid(raise_exception=True)
+        # serializer.save()
         return Response({"status":200,"error" : False, "messasge":"Data is saved successfully"})
-    
 
     def get(self, request, format=None,pk=None):
         id=pk
@@ -53,3 +60,5 @@ class AddressAPI(APIView):
         serializer = AddressSerializer(address, many=True)
         print(serializer.data)
         return Response(serializer.data)
+    
+

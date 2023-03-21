@@ -7,10 +7,9 @@ from django.db import models
 from authentication.models import Signup
 
 class Profile(models.Model):
-   
+    signup_profile=models.OneToOneField(Signup,on_delete=models.CASCADE)
     first_name = models.CharField(max_length=50)
     last_name = models.CharField(max_length=50)
-    email = models.EmailField(unique=True)
     phone_number = models.CharField(max_length=13)
     date_of_birth = models.DateField(null=True, blank=True)
 

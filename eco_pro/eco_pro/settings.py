@@ -11,6 +11,8 @@ https://docs.djangoproject.com/en/4.1/ref/settings/
 """
 
 from pathlib import Path
+from datetime import timedelta
+# import rest_framework_simplejwt
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -47,6 +49,8 @@ INSTALLED_APPS = [
     'profile',
     'cart',
     'search',
+    'rest_framework_simplejwt',
+    # 'rest_framework.authtoken',
 ]
 
 MIDDLEWARE = [
@@ -62,12 +66,18 @@ MIDDLEWARE = [
 ]
 
 REST_FRAMEWORK = {
-    # 'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.LimitOffsetPagination',
-    # 'PAGE_SIZE': 10,
-
+  
     'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
-    'PAGE_SIZE': 10
+    'PAGE_SIZE': 10,
+    
+    
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
+    ],
 }
+
+
+
 # CORS_ALLOWED_ORIGINS = [
 #     # "https://example.com",
 #     # "https://sub.example.com",
@@ -101,11 +111,6 @@ CORS_ALLOW_HEADERS = [
     "x-csrftoken",
     "x-requested-with",
 ]
-
-
-
-
-
 ROOT_URLCONF = 'eco_pro.urls'
 
 TEMPLATES = [
@@ -178,8 +183,24 @@ USE_TZ = True
 
 STATIC_URL = 'static/'
 
+AUTH_USER_MODEL= "authentication.Signup"
+SIMPLE_JWT = {
+"ACCESS_TOKEN_LIFETIME":timedelta(days=30),
+"REFRESH_TOKEN_LIFETIME":timedelta(days=31),
+"AUTH_HEADER_TYPES": ("Bearer",), 
+"AUTH_HEADER_NAME": "HTTP_AUTHORIZATION",
+"USER_ID_FIELD":"id",
+"USER_ID_CLAIM":"user_id",
+"USER_AUTHENTICATION_RULE":"rest_framework_simplejwt.authentication.default_user_authentication_rule", 
+"AUTH_TOKEN_CLASSES": ("rest_framework_simplejwt.tokens.AccessToken",),
+"TOKEN_TYPE_CLAIM": "token_type",
+"TOKEN_USER_CLASS": "rest_framework_simplejwt.models.TokenUser",
+"JTI_CLAIM": "jti",
+"ROTATE_REFRESH_TOKENS": True, 
+"BLACKLIST_AFTER_ROTATION": True,}
+
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field
 
-DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+#DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 # APPEND_SLASH = False

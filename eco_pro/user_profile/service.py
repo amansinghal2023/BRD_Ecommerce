@@ -1,25 +1,30 @@
 from .models import Profile,Address
+from authentication.models import Signup
 from django.db.models import Q
-
 
 def getprofile(data):
     data= data
-    # print("I M IN SERVICE DATA -----------------------",data)
+    print("-----> this is data from getprofile function",data)
     for i in data:
-        pro_lis=[]
-        # print(i.get("address"))
-        pro=i.get("address")
-        pro_lis.append(pro)
-        print("THIS IS PRO--------------------------- ",pro)
-        pro_name=[]
-        
-
-        for j in pro_lis:
-            name=list(Address.objects.filter(id=j).values())
-        # list(Product.objects.filter(id = cart_obj.product[0]).values())
-
-            # print("this is name is django --------------------------------------->",name)
-            pro_name.append(name)
-        # i["address"]=pro_name[0]
+        print(i.get("signup_profile"))
+        cat=i.get("signup_profile")
+        cat_name=[]
+        for j in range(0,cat+1):
+            if j==cat:
+                name=Signup.objects.get(id=j).email
+                cat_name.append(name)
+                i["signup_profile"]=cat_name
     return data
+
+    # data= data
+    # for i in data:
+    #     pro_lis=[]
+    #     pro=i.get("address")
+    #     pro_lis.append(pro)
+    #     print("THIS IS PRO--------------------------- ",pro)
+    #     pro_name=[]
+    #     for j in pro_lis:
+    #         name=list(Address.objects.filter(id=j).values())
+    #         pro_name.append(name)
+    # return data
 

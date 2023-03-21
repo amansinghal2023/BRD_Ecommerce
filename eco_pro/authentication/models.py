@@ -1,12 +1,15 @@
 from django.db import models
-
+from django.contrib.auth.models import UserManager,PermissionsMixin,AbstractBaseUser,AbstractUser
 # Create your models here.
 
-class Signup(models.Model):
+class Signup(AbstractBaseUser):
     username=models.CharField(max_length=100,unique=True)
     email=models.EmailField(max_length=100,unique=True)
     password=models.CharField(max_length=20)
     c_password=models.CharField(max_length=20)
+
+    REQUIRED_FIELDS=[]
+    USERNAME_FIELD="email"
 
 '''
 class Category(model.Models):

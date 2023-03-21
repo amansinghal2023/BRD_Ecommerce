@@ -8,18 +8,32 @@ from .serializer import CartSerializer
 
 
 class CartItems(APIView):
-    def get(self,request):
-        product_id = request.GET.get('id')
-        email= request.GET.get('email')
+    def post(self,request):
+        '''
+        step 1- get product id and count 
+        step 2 - store this in cart table 
+        step 3- create a get method and get id whos user login by request.user.id
+        step 4 - fetch all the item from cart db with the login user
+        step 5- total item = add the total count all the product
+        step 6- product.id.prize*count (total prize)
+        '''
 
-        email_obj= Signup.objects.filter(email=email)
-        print(email_obj)
-        if len(email_obj)==0:
-            return Response({"status":400,"error" : True, "messasge":"Invalid User"})
-        else:
-            cart_obj= Cart(user=email_obj[0],product=[product_id])
-            cart_obj.save()
-            return Response({"status":200,"error" : False, "messasge":"Item has been added in cart"})
+
+        user_id=request.user.id
+        data= request.data
+        print("---------------->.........",data)
+        print("---------------->.........",user_id)
+
+        # product_id = request.GET.get('id')
+        # email= request.GET.get('email')
+        # email_obj= Signup.objects.filter(email=email)
+        # print(email_obj)
+        # if len(email_obj)==0:
+        #     return Response({"status":400,"error" : True, "messasge":"Invalid User"})
+        # else:
+        #     cart_obj= Cart(user=email_obj[0],product=[product_id])
+        #     cart_obj.save()
+        #     return Response({"status":200,"error" : False, "messasge":"Item has been added in cart"})
         
     
         

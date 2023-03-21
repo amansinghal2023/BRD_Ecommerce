@@ -107,8 +107,13 @@ class ProductDetailsView(APIView):
 class CategoryViewAPI(APIView):
     def get(self, request,category_name):
         paginator = PageNumberPagination()
-        paginator.page_size=8
+        paginator.page_size=7
         cat = Product.objects.filter(product_category__name__icontains=category_name)
         result_page=paginator.paginate_queryset(cat,request)
         serializer = ProductSerializer(result_page, many=True)
-        return Response(serializer.data)
+        # return Response(serializer.data)
+        return Response({"status" : 200 , 
+                         "error" : False ,
+                         "limit":paginator.page_size,
+                         "data":serializer.data})
+

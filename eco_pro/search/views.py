@@ -34,11 +34,9 @@ from product.models import Category,Product
 
 class SearchItems(APIView):
     serializer_class = ProductSerializer
-
     def get(self, request):
         search_param = request.GET.get('name')
-        queryset = Product.objects.all()
-
+        # queryset = Product.objects.all()
         if search_param:
             queryset = queryset.filter(Q(product_name__icontains=search_param) | Q(product_category__name__icontains=search_param))
 

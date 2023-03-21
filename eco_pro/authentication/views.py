@@ -5,6 +5,7 @@ from .serializers import  SignupSerializer
 from .models import Signup
 from .service import validate_password,user_validation
 from django.db.models import Q
+from rest_framework_simplejwt.tokens import RefreshToken
 
 class SignupAPI(APIView):
     def post(self, request):
@@ -19,7 +20,6 @@ class SignupAPI(APIView):
         else:
             return Response({"status":400,"error" : True,"messasge":"password and confirm password is not same"})
         
-
     def get(self, request, format=None):
         signup = Signup.objects.all()
         serializer = SignupSerializer(signup, many=True)
@@ -30,17 +30,24 @@ class LoginAPI(APIView):
     def post(self,request):
         email=request.data.get('email')
         password=request.data.get('password')
-        flag=user_validation(email,password)
 
-        if flag==True:
-            return Response({"status":200,"error" : False, "messasge":"login successfully"})
-        else:
-            return Response({"status":400,"error" : True,"messasge":"not matching"})
-        
-    # def get(self, request, format=None):
-    #     email=Signup.objects.get('email')
-    #     password=Signup.objects.get('password')
-    #     signup = Signup.objects.filter(Q(email=email) & Q(password=password)).values()
-    #     serializer = SignupSerializer(signup, many=True)
-    #     print(serializer.data)
-    #     return Response(serializer.data)
+        # print("---------------------------...............",email)
+        # print("---------------------------...............",password)
+        # flag=user_validation(email,password)
+        # if flag==True:
+        #     return Response({"status":200,"error" : False, "messasge":"login successfully"})
+        # else:
+        #     return Response({"status":400,"error" : True,"messasge":"not matching"})
+        user=Signup.objects.get(email=email,password=password)
+        username=Signup.objects.values_list('username', flat=True)
+        print("--------------------------------->>>>",username[0])
+        if user:
+            refresh=RefreshToken.for_user(user)
+            print(refresh)
+            return Response({"status":200,
+                             "username": str(username[0]),
+                             "refresh":str(refresh),
+                             "access":str(refresh.access_token)
+                             })
+        return Response({"status":404})
+ 
