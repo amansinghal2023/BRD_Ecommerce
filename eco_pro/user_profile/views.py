@@ -18,12 +18,12 @@ class ProfileAPI(APIView):
         data= request.data
         print("---------------->.........",data)
         print("---------------->.........",user_id)
-        # data['signup_profile']=user_id
+        data['signup_profile']=user_id
         # print("------------------------>>>>>>>>>>>>>>>>>.",data)
-        # serializer=ProfileSerializer(data=request.data)
-        # serializer.is_valid(raise_exception=True)
-        # serializer.save()
-        # return Response({"status":200,"error" : False, "messasge":"Data is saved successfully"})
+        serializer=ProfileSerializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        serializer.save()
+        return Response({"status":200,"error" : False, "messasge":"Data is saved successfully"})
     
     def get(self, request, format=None,pk=None):
         id=pk
@@ -44,8 +44,11 @@ class AddressAPI(APIView):
         data= request.data
         print("---------------->.........",data)
         print("---------------->.........",user_id)
-        # serializer=AddressSerializer(data=request.data)
-        # serializer.is_valid(raise_exception=True)
+        data['profile']=user_id
+        print("------------------------->",request.data)
+        serializer=AddressSerializer(data=request.data)
+        
+        serializer.is_valid(raise_exception=True)
         # serializer.save()
         return Response({"status":200,"error" : False, "messasge":"Data is saved successfully"})
 

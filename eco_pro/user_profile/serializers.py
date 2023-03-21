@@ -7,7 +7,7 @@ from authentication.models import Signup
 class AddressSerializer(serializers.ModelSerializer):
     class Meta:
         model = Address
-        fields = ['id', 'profile', 'street_address', 'city', 'state', 'zip_code']
+        fields = ['id',  'street_address', 'city', 'state', 'zip_code']
 
 class ProfileSerializer(serializers.ModelSerializer):
     addresses = AddressSerializer(many=True, read_only=True)
